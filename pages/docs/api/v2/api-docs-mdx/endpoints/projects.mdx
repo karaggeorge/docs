@@ -40,7 +40,6 @@ Create a new project with the `name` request parameter. If the project already e
   <Code lang="json">{`{
   "id":"QmQKrt94KYKF3sDysJq19N87uMmE8Wicbt2GirePy1dH8U",
   "name":"a-project-name",
-  "alias": [],
   "accountId":"K4amb7K9dAt5R2vBJWF32bmY",
   "updatedAt":1555413045188,
   "createdAt":1555413045188
@@ -79,7 +78,6 @@ Example response:
 <Code lang="json">{`{
   "id":"QmQKrt94KYKF3sDysJq19N87uMmE8Wicbt2GirePy1dH8U",
   "name":"a-project-name",
-  "alias": [],
   "accountId":"K4amb7K9dAt5R2vBJWF32bmY",
   "updatedAt":1555413045188,
   "createdAt":1555413045188
@@ -117,18 +115,20 @@ Example response:
   {
     "id":"QmQKrt94KYKF3sDysJq19N8gvhmE8Wicbt2GirePy1dH8U",
     "name":"a-project-name",
-    "alias": [],
     "accountId":"K4amb7K9dAt5R2vBJWF32bmY",
     "createdAt":1555413045188,
-    "updatedAt":1555413045188
+    "updatedAt":1555413045188,
+    "targets": {},
+    "latestDeployments": []
   },
   {
     "id":"QmRhxc9HAmRMcLvWhCAf2ALLctxZ4s4fwsM1D5kNM8PJuL",
     "name":"another-project-name",
-    "alias": [],
     "accountId":"K4amb7K9dAt5R2vBJWF32bmY",
     "createdAt":1555072968396,
-    "updatedAt":1555345633993
+    "updatedAt":1555345633993,
+    "targets": {},
+    "latestDeployments": []
   }
 ]
 `}</Code>
@@ -151,6 +151,20 @@ Get the information for a specific project by passing either the project `id` or
 | **id**   | <HelpLink href="#api-basics/types">ID</HelpLink>           | No       | The unique project identifier. |
 | **name** | <HelpLink href="#api-basics/types">String</HelpLink>       | No       | The project name.              |
 
+#### Response Parameters
+
+| Key                   | <HelpLink href="#api-basics/types" hasIcon>Type</HelpLink> | Description                                                                                                           |
+| --------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **id**                | <HelpLink href="#api-basics/types">ID</HelpLink>           | A string holding the unique ID of the project.                                                                        |
+| **name**              | <HelpLink href="#api-basics/types">String</HelpLink>       | The name of the project.                                                                                              |
+| **alias**             | <HelpLink href="#api-basics/types">List</HelpLink>         | A list of production domains for the project.                                                                         |
+| **accountId**         | <HelpLink href="#api-basics/types">String</HelpLink>       | The unique ID of the user or team the project belongs to.                                                             |
+| **createdAt**         | <HelpLink href="#api-basics/types">Date</HelpLink>         | A number containing the date when the project was created in milliseconds.                                            |
+| **updatedAt**         | <HelpLink href="#api-basics/types">Date</HelpLink>         | A number containing the date when the project was updated in milliseconds.                                            |
+| **env**               | <HelpLink href="#api-basics/types">List</HelpLink>         | A list of environment variables configured for the project.                                                           |
+| **targets**           | <HelpLink href="#api-basics/types">Map</HelpLink>          | An object which has a `production` key containing the production deployment object, if a production deployment exists |
+| **latestDeployments** | <HelpLink href="#api-basics/types">List</HelpLink>         | A list of the latest deployments for the project                                                                      |
+
 <Example>
   <span>Example request:</span>
 
@@ -161,10 +175,83 @@ Example response:
 <Code lang="json">{`{
   "id":"QmQKrt94KYKF3sDysJq19N8gvhmE8Wicbt2GirePy1dH8U",
   "name":"a-project-name",
-  "alias": [],
+  "alias": [
+    {
+      "createdAt": 1555413045188,
+      "domain": "foobar.com",
+      "target": "PRODUCTION"
+    }
+  ],
   "accountId":"K4amb7K9dAt5R2vBJWF32bmY",
   "createdAt":1555413045188,
-  "updatedAt":1555413045188
+  "updatedAt":1555413045188,
+  "env": [
+    {
+      "key": "API_SECRET",
+      "value": "@a-new-secret",
+      "configurationId": null,
+      "updatedAt": 1557241361455,
+      "createdAt": 1557241361455
+    }
+  ],
+  "targets": {
+    "production": {
+      "alias": [
+        "foobar.com"
+      ],
+      "aliasAssigned": 1571239348998,
+      "builds": [
+        {
+          "use": "@now/static",
+          "src": "**"
+        }
+      ],
+      "createdAt": 1571239348998,
+      "createdIn": "sfo1",
+      "deploymentHostname": "a-project-name-rjtr4pz3f",
+      "forced": false,
+      "id": "dpl_89qyp1cskzkLrVicDaZoDbjyHuDJ",
+      "meta": {},
+      "plan": "unlimited",
+      "private": true,
+      "readyState": "READY",
+      "requestedAt": 1571239348998,
+      "target": "production",
+      "teamId": null,
+      "type": "LAMBDAS",
+      "url": "a-project-name-rjtr4pz3f.now.sh",
+      "userId": "K4amb7K9dAt5R2vBJWF32bmY"
+    }
+  },
+  "latestDeployments": [
+    {
+      "alias": [
+        "foobar.com"
+      ],
+      "aliasAssigned": 1571239348998,
+      "builds": [
+        {
+          "use": "@now/static",
+          "src": "**"
+        }
+      ],
+      "createdAt": 1571239348998,
+      "createdIn": "sfo1",
+      "deploymentHostname": "a-project-name-rjtr4pz3f",
+      "forced": false,
+      "id": "dpl_89qyp1cskzkLrVicDaZoDbjyHuDJ",
+      "meta": {},
+      "plan": "unlimited",
+      "private": true,
+      "readyState": "READY",
+      "requestedAt": 1571239348998,
+      "target": "production",
+      "teamId": null,
+      "type": "LAMBDAS",
+      "url": "a-project-name-rjtr4pz3f.now.sh",
+      "userId": "K4amb7K9dAt5R2vBJWF32bmY"
+    }
+  ]
 }`}</Code>
 </Example>
 
@@ -227,8 +314,9 @@ Example response:
   {
     "key": "API_SECRET",
     "value": "@a-new-secret",
-    "installationId": null,
-    "updatedAt": 1557241361455
+    "configurationId": null,
+    "updatedAt": 1557241361455,
+    "createdAt": 1557241361455
   }
 ]`}</Code>
 </Example>
@@ -267,6 +355,9 @@ Create a new environment variable for the project by passing the project `id` in
 <Request
   method="POST"
   url="https://api.zeit.co/v1/projects/QmXtXGhXF6mZQ5ete2AwbeV3zAS17wEj7LYM3LuQ3Y45FF/env"
+  headers={{
+    'Content-Type': 'application/json'
+  }}
   auth
   body={{
     key: 'API_SECRET',
@@ -280,8 +371,9 @@ Example response:
   {
     "key": "API_SECRET",
     "value": "@a-new-secret",
-    "installationId": null,
-    "updatedAt": 1557241361455
+    "configurationId": null,
+    "updatedAt": 1557241361455,
+    "createdAt": 1557241361455
   }
 ]`}</Code>
 </Example>
@@ -291,11 +383,11 @@ Example response:
 </Note>
 
 <Note>
-  The <InlineCode>installationId</InlineCode> depends on the token used to make
+  The <InlineCode>configurationId</InlineCode> depends on the token used to make
   the request.
 </Note>
 
-### Replace a Project Environment Variable
+### Replace all Project Environment Variables
 
 <Endpoint method="PUT" url="/v1/projects/:id/env" />
 
@@ -342,8 +434,9 @@ Example response:
   {
     "key": "API_SECRET",
     "value": "@a-new-secret",
-    "installationId": null,
-    "updatedAt": 1557241361455
+    "configurationId": null,
+    "updatedAt": 1557241361455,
+    "createdAt": 1557241361455
   }
 ]`}</Code>
 </Example>
@@ -388,7 +481,7 @@ Example response:
 
 <Endpoint method="POST" url="/v1/projects/:id/alias" />
 
-Add a production domain to the project by passing the project `id` in the URL and `domain` as request parameters.
+Add a production domain to the project by passing the project `id` in the URL and `domain` as request parameters. If the domain already exists on the project, fails with `400` status code.
 
 #### URL Parameters
 
@@ -408,6 +501,9 @@ Add a production domain to the project by passing the project `id` in the URL an
 <Request
   method="POST"
   url="https://api.zeit.co/v1/projects/QmXtXGhXF6mZQ5ete2AwbeV3zAS17wEj7LYM3LuQ3Y45FF/alias"
+  headers={{
+    'Content-Type': 'application/json'
+  }}
   auth
   body={{
     domain: 'foobar.com'
@@ -419,9 +515,24 @@ Example response:
 <Code lang="json">{`[
   {
     "createdAt": 1562119110860,
-    "domain": "foobar.com"
+    "domain": "foobar.com",
+    "target": "PRODUCTION"
   }
 ]`}</Code>
+
+Example failed **400** response:
+
+<Code lang="json">{`{
+  "error": {
+    "code": "ALIAS_DOMAIN_EXIST",
+    "domain": "foobar.com",
+    "project": {
+      "id": "QmXtXGhXF6mZQ5ete2AwbeV3zAS17wEj7LYM3LuQ3Y45FF",
+      "name": "a-project-name",
+      "accountId": "K4amb7K9dAt5R2vBJWF32bmY",
+    }
+  }
+}`}</Code>
 </Example>
 
 <Note>
@@ -450,6 +561,12 @@ Delete a specific production domain configuration from a project by passing the 
 | Key    | <HelpLink href="#api-basics/types" hasIcon>Type</HelpLink> | Required | Description                    |
 | ------ | ---------------------------------------------------------- | -------- | ------------------------------ |
 | **id** | <HelpLink href="#api-basics/types">ID</HelpLink>           | Yes      | The unique project identifier. |
+
+#### Query Parameters
+
+| Key        | <HelpLink href="#api-basics/types" hasIcon>Type</HelpLink> | Required | Description                                        |
+| ---------- | ---------------------------------------------------------- | -------- | -------------------------------------------------- |
+| **domain**  | <HelpLink href="#api-basics/types">String</HelpLink>      | Yes      | The name of the production domain.                 |
 
 <Example>
   <span>Example request:</span>
