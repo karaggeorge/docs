@@ -27,7 +27,7 @@ import withPermalink from '~/lib/api/with-permalink'
 import HR from '~/components/text/hr'
 import { FooterFeedback } from '~/components/feedback-input'
 
-import ApiDocs from './api-docs-mdx/index.mdx'
+import ApiDocs from '~/components/references-mdx/api/v1/index.mdx'
 
 const NonAmpOnly = ({ children }) => (useAmp() ? null : children)
 
@@ -200,7 +200,7 @@ class APIPage extends Component {
                         the version 2 API reference
                       </GenericLink>
                       . If you have yet to upgrade, see the{' '}
-                      <GenericLink href="/guides/upgrade-to-2-0">
+                      <GenericLink href="/guides/migrate-to-zeit-now/">
                         upgrade guide
                       </GenericLink>
                       .
